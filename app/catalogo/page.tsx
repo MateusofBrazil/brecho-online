@@ -1,10 +1,18 @@
 
 import Link from "next/link";
+import Image from "next/image";
 
 const pecas = [
-  { id: 1, nome: "Camiseta Vintage", tamanho: "M", preco: 35 },
-  { id: 2, nome: "Jaqueta Jeans", tamanho: "G", preco: 80 },
-  { id: 3, nome: "Calça Jeans", tamanho: "38", preco: 55 },
+  { id: 1, nome: "Camisa de Futebol Listrada", tamanho: "M", preco: 24 },
+  { id: 2, nome: "Moletom Preto com Capuz", tamanho: "G", preco: 20 },
+  { id: 3, nome: "Blusa Preta", tamanho: "38", preco: 11 },
+  { id: 4, nome: "Casaco Cinza com Gola Preta", tamanho: "GG", preco: 12 },
+  { id: 5, nome: "Calça Rosa", tamanho: "P", preco: 8 },
+  { id: 6, nome: "Camisa Bege Estampada", tamanho: "M", preco: 14 },
+  { id: 7, nome: "Suéter Colorido", tamanho: "M", preco: null },
+  { id: 8, nome: "Vestido de Fantasia Rosa e Preto", tamanho: "M", preco: 17 },
+  { id: 9, nome: "Camisa Estampada Azul e Branca", tamanho: "M", preco: 21 },
+  { id: 10, nome: "Camisa Dourada Estampada", tamanho: "M", preco: 22 },
 ];
 
 export default function Catalogo() {
@@ -15,18 +23,37 @@ export default function Catalogo() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {pecas.map((peca) => (
-          <Link
+          <article
             key={peca.id}
-            href={`/catalogo/${peca.id}`}
-            className="rounded-xl bg-white p-4 shadow transition hover:shadow-lg"
+            className="rounded-xl bg-white p-4 shadow"
           >
-            <div className="flex h-56 items-center justify-center rounded bg-zinc-200">
-              Foto da peça
-            </div>
-            <h2 className="mt-4 text-xl font-semibold">{peca.nome}</h2>
+            <Image
+              src={`/pecas/images${peca.id}.jpg`}
+              alt={`Foto de ${peca.nome}`}
+              width={600}
+              height={600}
+              className="h-56 w-full rounded object-contain"
+            />
+
+            <h2 className="mt-4 text-xl font-semibold">
+              {peca.nome}
+            </h2>
+
             <p>Tamanho: {peca.tamanho}</p>
-            <p className="font-bold">R$ {peca.preco.toFixed(2)}</p>
-          </Link>
+
+            <p className="font-bold">
+              {peca.preco !== null
+                ? `R$ ${peca.preco.toFixed(2)}`
+                : "Preço a definir"}
+            </p>
+
+            <Link
+  href={`/catalogo/${peca.id}`}
+  className="mt-4 inline-block rounded bg-zinc-900 px-4 py-2 text-white"
+>
+  Ver detalhes
+</Link>
+          </article>
         ))}
       </div>
     </main>

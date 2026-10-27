@@ -10,7 +10,7 @@ const pecas = [
   { id: 4, nome: "Casaco Cinza com Gola Preta", tamanho: "GG", preco: 12 },
   { id: 5, nome: "Calça Rosa", tamanho: "P", preco: 8 },
   { id: 6, nome: "Camisa Bege Estampada", tamanho: "M", preco: 14 },
-  { id: 7, nome: "Suéter Colorido", tamanho: "M", preco: null },
+  { id: 7, nome: "Suéter Colorido", tamanho: "M", preco: 12 },
   { id: 8, nome: "Vestido de Fantasia Rosa e Preto", tamanho: "M", preco: 17 },
   { id: 9, nome: "Camisa Estampada Azul e Branca", tamanho: "M", preco: 21 },
   { id: 10, nome: "Camisa Dourada Estampada", tamanho: "M", preco: 22 },

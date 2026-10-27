@@ -1,21 +1,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import prisma from "@/lib/prisma";
 
-const pecas = [
-  { id: 1, nome: "Camisa de Futebol Listrada", tamanho: "M", preco: 24 },
-  { id: 2, nome: "Moletom Preto com Capuz", tamanho: "G", preco: 20 },
-  { id: 3, nome: "Blusa Preta", tamanho: "38", preco: 11 },
-  { id: 4, nome: "Casaco Cinza com Gola Preta", tamanho: "GG", preco: 12 },
-  { id: 5, nome: "Calça Rosa", tamanho: "P", preco: 8 },
-  { id: 6, nome: "Camisa Bege Estampada", tamanho: "M", preco: 14 },
-  { id: 7, nome: "Suéter Colorido", tamanho: "M", preco: 12 },
-  { id: 8, nome: "Vestido de Fantasia Rosa e Preto", tamanho: "M", preco: 17 },
-  { id: 9, nome: "Camisa Estampada Azul e Branca", tamanho: "M", preco: 21 },
-  { id: 10, nome: "Camisa Dourada Estampada", tamanho: "M", preco: 22 },
-];
+export const dynamic = "force-dynamic";
 
-export default function Catalogo() {
+export default async function Catalogo() {
+  const pecas = await prisma.produto.findMany({
+    orderBy: { id: "asc" },
+  });
+
   return (
     <main className="min-h-screen bg-amber-50 p-8 text-zinc-900">
       <Link href="/">← Início</Link>
@@ -27,13 +21,15 @@ export default function Catalogo() {
             key={peca.id}
             className="rounded-xl bg-white p-4 shadow"
           >
-            <Image
-              src={`/pecas/images${peca.id}.jpg`}
-              alt={`Foto de ${peca.nome}`}
-              width={600}
-              height={600}
-              className="h-56 w-full rounded object-contain"
-            />
+            {peca.imagemUrl && (
+              <Image
+                src={peca.imagemUrl}
+                alt={`Foto de ${peca.nome}`}
+                width={600}
+                height={600}
+                className="h-56 w-full rounded object-contain"
+              />
+            )}
 
             <h2 className="mt-4 text-xl font-semibold">
               {peca.nome}
@@ -42,17 +38,18 @@ export default function Catalogo() {
             <p>Tamanho: {peca.tamanho}</p>
 
             <p className="font-bold">
-              {peca.preco !== null
-                ? `R$ ${peca.preco.toFixed(2)}`
-                : "Preço a definir"}
+              {new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(Number(peca.preco))}
             </p>
 
             <Link
-  href={`/catalogo/${peca.id}`}
-  className="mt-4 inline-block rounded bg-zinc-900 px-4 py-2 text-white"
->
-  Ver detalhes
-</Link>
+              href={`/catalogo/${peca.id}`}
+              className="mt-4 inline-block rounded bg-zinc-900 px-4 py-2 text-white"
+            >
+              Ver detalhes
+            </Link>
           </article>
         ))}
       </div>
